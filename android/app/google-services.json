@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1050679743270",
+    "project_id": "givt-driver",
+    "storage_bucket": "givt-driver.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050679743270:android:02502d69caadc1ede4a7e7",
+        "android_client_info": {
+          "package_name": "com.givt_driver_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqiRXgqdhUninAIQU0NCFZGlXKtG9itVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
