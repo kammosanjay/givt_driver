@@ -265,7 +265,7 @@ class _GeneratePinPageState extends State<GeneratePinPage>
                       final pin = pinController.text.trim();
                       final loginProvider = context.read<LoginProvider>();
             
-                      // loginProvider.savePin(pin, context);
+                      loginProvider.savePin(pin, context);
                       context.read<RouteProvider>().navigateReplace(
                         '/home',
                         context,

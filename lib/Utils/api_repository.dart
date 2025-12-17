@@ -41,6 +41,7 @@ class ApiRepository {
         "email": signupData.email,
         "gender": signupData.gender,
         "dob": formatted,
+        "user_role": signupData.userRole,
         // Only include token if needed by your API!
         // "token": signupData.token,
       },

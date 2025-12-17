@@ -100,12 +100,12 @@ class CustomWidgets {
             // labelText: name,
             label: Text(
               name!,
-              style: GoogleFonts.inter(
+              style: TextStyle(
+                fontFamily: 'san-serif',
                 color: headingcolor ?? const Color.fromARGB(255, 182, 34, 34),
                 fontSize: fontSize ?? 12,
                 fontWeight: fontwgt ?? FontWeight.w600,
               ),
-              
             ),
             fillColor: isReadyOnly
                 ? Colors.grey.shade400
@@ -137,7 +137,11 @@ class CustomWidgets {
           ),
           errorBuilder: (context, errorText) => Text(
             errorText,
-            style: TextStyle(color: Colors.red, fontSize: 12),
+            style: TextStyle(
+              fontFamily: 'san-serif',
+              color: Colors.red,
+              fontSize: 12,
+            ),
           ),
         ),
       ],
@@ -181,13 +185,17 @@ class CustomWidgets {
 
           child: DropdownButtonFormField<T>(
             dropdownColor: Colors.white,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(fontFamily: 'san-serif', color: Colors.black),
             value: selectedItem,
             isExpanded: true,
             focusNode: focusNode,
             hint: Text(
               hint!,
-              style: TextStyle(color: Colors.grey, fontSize: fontSize),
+              style: TextStyle(
+                fontFamily: 'san-serif',
+                color: Colors.grey,
+                fontSize: fontSize,
+              ),
             ),
             selectedItemBuilder: (BuildContext context) {
               return items.map<Widget>((T item) {
@@ -201,7 +209,8 @@ class CustomWidgets {
             decoration: InputDecoration(
               prefixIcon: icon,
               labelText: label,
-              labelStyle: GoogleFonts.inter(
+              labelStyle: TextStyle(
+                fontFamily: 'san-serif',
                 color: MyColors.hintColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -268,7 +277,8 @@ class CustomWidgets {
       child: FittedBox(
         child: Text(
           buttonName ?? 'Button',
-          style: GoogleFonts.inter(
+          style: TextStyle(
+            fontFamily: 'san-serif',
             fontSize: fontSize ?? 12,
             fontWeight: fontWeight ?? FontWeight.w600,
             color: fontColor, // Text color

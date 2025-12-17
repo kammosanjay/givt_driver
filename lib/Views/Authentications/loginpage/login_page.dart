@@ -83,17 +83,16 @@ class _LoginPageState extends State<LoginPage>
                 duration: const Duration(seconds: 1),
                 child: Text(
                   "Givt, more than just a gift",
-      
-                  style: GoogleFonts.inter(
+
+                  style: TextStyle(
+                    fontFamily: 'san-serif',
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: isDarkEnabled
-                        ? Colors.white
-                        : MyColors.primaryColor,
+                    color: isDarkEnabled ? Colors.white : MyColors.primaryColor,
                   ),
                 ),
               ),
-      
+
               // Moving logo
               AnimatedAlign(
                 alignment: moveLeft ? Alignment.centerLeft : Alignment.center,
@@ -148,7 +147,8 @@ class _LoginPageState extends State<LoginPage>
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Login/SignUp',
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
+                            fontFamily: 'san-serif',
                             fontSize: 20,
                             fontWeight: FontWeight.w900,
                             color: MyColors.bodyTextColor,
@@ -160,7 +160,8 @@ class _LoginPageState extends State<LoginPage>
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Login to continue your journey with Givt',
-                          style: GoogleFonts.inter(
+                          style: TextStyle(
+                            fontFamily: 'san-serif',
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             color: MyColors.hintColor,
@@ -177,15 +178,15 @@ class _LoginPageState extends State<LoginPage>
                               name: "Mobile Number",
                               // label: 'Enter your mobile number',
                               hintfontSize: 14,
-      
+
                               hintfontWeight: FontWeight.normal,
                               fontwgt: FontWeight.w600,
                               headingcolor: MyColors.hintColor,
                               hint: 'Enter your mobile number',
-      
+
                               hintColor: MyColors.hintColor,
                               controller: mobileController,
-                              keyboardtype: TextInputType.emailAddress,
+                              keyboardtype: TextInputType.number,
                               icon: Image(
                                 image: AssetImage('assets/images/mobile.png'),
                                 height: 14,
@@ -193,13 +194,13 @@ class _LoginPageState extends State<LoginPage>
                                 color: MyColors.primaryColor,
                               ),
                             ),
-      
+
                             SizedBox(height: 10),
                             Lottie.asset(
                               'assets/lottie/Delivery3.json',
                               height: 175,
                             ),
-      
+
                             // Image.asset("assets/images/delivery.jpg",height: 200,),
                             SizedBox(height: 10),
                             CustomWidgets.customButton(
@@ -209,49 +210,50 @@ class _LoginPageState extends State<LoginPage>
                               onPressed: () {
                                 final loginProvider = context
                                     .read<LoginProvider>();
-      
+
                                 final mobile = mobileController.text.trim();
-      
-                                // if (mobile.isEmpty) {
-                                //   FlutterToastr.show(
-                                //     "Please your mobile number",
-                                //     context,
-                                //     duration: FlutterToastr.lengthShort,
-                                //     position: FlutterToastr.bottom,
-                                //     backgroundColor: Colors.red,
-                                //     textStyle: GoogleFonts.inter(
-                                //       fontSize: 14,
-                                //       fontWeight: FontWeight.w600,
-                                //       color: MyColors.backgroundColor,
-                                //     ),
-                                //   );
-                                //   return;
-                                // } else if (mobile.length < 10 ||
-                                //     mobile.length > 10) {
-                                //   FlutterToastr.show(
-                                //     "Please enter 10-digits mobile number",
-                                //     context,
-                                //     duration: FlutterToastr.lengthLong,
-                                //     position: FlutterToastr.bottom,
-                                //     backgroundColor: Colors.red,
-                                //     textStyle: GoogleFonts.inter(
-                                //       fontSize: 14,
-                                //       fontWeight: FontWeight.w600,
-                                //       color: MyColors.backgroundColor,
-                                //     ),
-                                //   );
-                                //   return;
-                                // } else {
-                                //   loginProvider.firebasePhoneVerification(
-                                //     mobile,
-                                //     context,
-                                //   );
-                                 
-                                // }
-                                 context.read<RouteProvider>().navigateTo(
-                                    '/home',
+
+                                if (mobile.isEmpty) {
+                                  FlutterToastr.show(
+                                    "Please your mobile number",
+                                    context,
+                                    duration: FlutterToastr.lengthShort,
+                                    position: FlutterToastr.center,
+                                    backgroundColor: Colors.red,
+                                    textStyle: TextStyle(
+                                      fontFamily: 'san-serif',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: MyColors.backgroundColor,
+                                    ),
+                                  );
+                                  return;
+                                } else if (mobile.length < 10 ||
+                                    mobile.length > 10) {
+                                  FlutterToastr.show(
+                                    "Please enter 10-digits mobile number",
+                                    context,
+                                    duration: FlutterToastr.lengthLong,
+                                    position: FlutterToastr.center,
+                                    backgroundColor: Colors.red,
+                                    textStyle: TextStyle(
+                                      fontFamily: 'san-serif',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: MyColors.backgroundColor,
+                                    ),
+                                  );
+                                  return;
+                                } else {
+                                  loginProvider.firebasePhoneVerification(
+                                    mobile,
                                     context,
                                   );
+                                }
+                                //  context.read<RouteProvider>().navigateTo(
+                                //     '/home',
+                                //     context,
+                                //   );
                               },
                               fontWeight: FontWeight.w900,
                               fontSize: 18,
@@ -259,7 +261,7 @@ class _LoginPageState extends State<LoginPage>
                               btnColor: MyColors.primaryColor,
                             ),
                             SizedBox(height: 20),
-      
+
                             // SizedBox(height: 30),
                             // Align(
                             //   alignment: Alignment.center,
@@ -312,7 +314,7 @@ class _LoginPageState extends State<LoginPage>
               },
             ),
           ),
-      
+
           // Image.asset('assets/images/delivery.jpg',)
         ],
       ),

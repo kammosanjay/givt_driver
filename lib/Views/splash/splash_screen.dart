@@ -48,10 +48,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 // const SizedBox(height: 20), // ⬇️ 20px space below image
                 Text(
                   "Givt, More Than Just A Gift",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
+                    fontFamily: 'san-serif',
                     fontSize: 20,
                     color: Color(0xFF810100),
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],

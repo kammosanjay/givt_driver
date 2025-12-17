@@ -195,10 +195,10 @@ class _OtpScreenByfireaseState extends State<OtpScreenByfirease>
                     );
                     // Assume 'verifyOtp' returns true for success, false for failure (modify your provider if needed)
                     if (otpResult == true) {
-                      // await loginProvider.loginByMobileNumber(
-                      //   loginProvider.userMobile!,
-                      //   context,
-                      // );
+                      await loginProvider.loginByMobileNumber(
+                        loginProvider.userMobile!,
+                        context,
+                      );
                       context.read<RouteProvider>().navigateReplace(
                         '/signUpPage',
                         context,

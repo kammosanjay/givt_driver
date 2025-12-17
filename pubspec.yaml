@@ -128,14 +128,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-    # - family: sanfrancisco
-    #   fonts:
-    #     - asset: fonts/SFbold.otf
-    #     - asset: fonts/SFlight.otf
-    #     - asset: fonts/SFmedium.otf
-    #     - asset: fonts/SFsemibold.otf
-    #     - asset: fonts/SFregular.otf
+  fonts:
+    - family: san-serif
+      fonts:
+        - asset: assets/fonts/Bold.ttf
+          weight: 700
+        - asset: assets/fonts/ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Regular.ttf
+          weight: 400
+        - asset: assets/fonts/SemiBold.ttf
+          weight: 600
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

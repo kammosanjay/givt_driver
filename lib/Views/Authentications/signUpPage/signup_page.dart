@@ -312,15 +312,16 @@ class _SignupPageState extends State<SignupPage>
                               // }
                               final box = GetStorage();
                               final token = box.read('token');
-                              // loginProvider.saveSignupData(
-                              //   SignupData(
-                              //     fullname: name,
-                              //     email: email,
-                              //     gender: gender,
-                              //     dateofbirth: dob,
-                              //     token: token,
-                              //   ),
-                              // );
+                              loginProvider.saveSignupData(
+                                SignupData(
+                                  fullname: name,
+                                  email: email,
+                                  gender: gender,
+                                  dateofbirth: dob,
+                                  token: token,
+                                  userRole: 4
+                                ),
+                              );
                               if (_formKey.currentState!.validate()) {
                                 context.read<RouteProvider>().navigateReplace(
                                   '/pinPage',

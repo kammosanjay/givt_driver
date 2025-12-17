@@ -204,7 +204,17 @@ class _MyHomeState extends State<MyHome> {
 
         appBar: AppBar(
           // backgroundColor:Colors.grey.shade100,
-          title: Text("Welcome to Givt"),
+          title: Text(
+            "Welcome to Givt",
+            style: TextStyle(
+              fontFamily: 'san-serif',
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: isDarkEnabled
+                  ? MyColors.backgroundColor
+                  : MyColors.bodyTextColor,
+            ),
+          ),
 
           leading: Image.asset("assets/images/couponlogo.png"),
 
