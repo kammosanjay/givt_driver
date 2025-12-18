@@ -4,8 +4,15 @@ import 'package:givt_driver_app/Views/Authentications/OTP/firebase_otp_screen.da
 import 'package:givt_driver_app/Views/Authentications/OTP/pin_generate_screen.dart';
 import 'package:givt_driver_app/Views/ChangePinScreen/change_pin_screen.dart';
 import 'package:givt_driver_app/Views/home/AppSetting/aboutScreen.dart';
-import 'package:givt_driver_app/Views/home/AppSetting/app_setting_provider.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/about_appscreen.dart';
+
 import 'package:givt_driver_app/Views/home/AppSetting/app_setting_screen.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/change_mobScreen.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/customer_support.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/edit_screen.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/faq.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/privacy_policy.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/profile_provider.dart';
 import 'package:givt_driver_app/Views/home/Coupon/coupon_provider.dart';
 import 'package:givt_driver_app/Views/home/Coupon/qr_code.dart';
 import 'package:givt_driver_app/Views/home/Survey/activity_page.dart';
@@ -100,7 +107,12 @@ class MyApp extends StatelessWidget {
         'couponhomepage': (context) => CouponHomepage(),
         'forgotPIN': (context) => ForgotPinScreen(),
         '/changePinScreen': (context) => ChangePinScreen(),
-        '/about': (context) => AboutScreen(),
+        '/about': (context) => AboutAppScreen(),
+        '/customerSupp': (context) => CustomerSupport(),
+        '/FAQ': (context) => FrequentlyAskQuestion(),
+        '/changeMobNum': (context) => ChangeMobScreen(),
+        '/privacyPolicy': (context) => Privaycypolicy(),
+        '/editProfile': (context) => EditProfileScreen(),
       },
     );
   }

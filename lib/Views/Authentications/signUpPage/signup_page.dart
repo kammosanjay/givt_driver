@@ -78,7 +78,7 @@ class _SignupPageState extends State<SignupPage>
           // mainAxisAlignment: MainAxisAlignment.center,
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 80,),
+            SizedBox(height: 80),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -97,7 +97,7 @@ class _SignupPageState extends State<SignupPage>
                     ),
                   ),
                 ),
-        
+
                 // Moving logo
                 AnimatedAlign(
                   alignment: moveLeft ? Alignment.centerLeft : Alignment.center,
@@ -112,7 +112,7 @@ class _SignupPageState extends State<SignupPage>
                 ),
               ],
             ),
-        
+
             Form(
               key: _formKey,
               child: Container(
@@ -160,7 +160,7 @@ class _SignupPageState extends State<SignupPage>
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: MyColors.hintColor,
+                          color: MyColors.appSteelGrey,
                         ),
                       ),
                     ),
@@ -170,7 +170,7 @@ class _SignupPageState extends State<SignupPage>
                       hintfontSize: 14,
                       name: 'Full Name',
                       fontwgt: FontWeight.w600,
-                      headingcolor: MyColors.hintColor,
+                      headingcolor: MyColors.appSteelGrey,
                       hint: 'Enter your Name',
                       validate: (value) {
                         if (value == null || value.isEmpty) {
@@ -178,7 +178,7 @@ class _SignupPageState extends State<SignupPage>
                         }
                         // Simple email validation
                       },
-                      hintColor: MyColors.hintColor,
+                      hintColor: MyColors.appSteelGrey,
                       controller: nameController,
                       keyboardtype: TextInputType.text,
                       icon: Image(
@@ -188,13 +188,13 @@ class _SignupPageState extends State<SignupPage>
                       ),
                     ),
                     SizedBox(height: 20),
-                        
+
                     CustomWidgets.customTextFeild(
                       context: context,
                       hintfontSize: 14,
                       name: "Email",
                       fontwgt: FontWeight.w600,
-                      headingcolor: MyColors.hintColor,
+                      headingcolor: MyColors.appSteelGrey,
                       hint: 'Enter your email',
                       validate: (value) {
                         if (value == null || value.isEmpty) {
@@ -206,7 +206,7 @@ class _SignupPageState extends State<SignupPage>
                         }
                         return null;
                       },
-                      hintColor: MyColors.hintColor,
+                      hintColor: MyColors.appSteelGrey,
                       controller: emailController,
                       keyboardtype: TextInputType.emailAddress,
                       icon: Image(
@@ -225,7 +225,7 @@ class _SignupPageState extends State<SignupPage>
                             selectedItem: 'Male',
                             label: 'Gender',
                             height: 60,
-                            color: MyColors.hintColor,
+                            color: MyColors.appSteelGrey,
                             // readOnly: true,
                             hint: 'Select Gender',
                             onChanged: (String? newValue) {
@@ -236,7 +236,7 @@ class _SignupPageState extends State<SignupPage>
                             },
                           ),
                         ),
-                        
+
                         SizedBox(width: 10),
                         Expanded(
                           child: CustomWidgets.customTextFeild(
@@ -245,8 +245,8 @@ class _SignupPageState extends State<SignupPage>
                             name: "Date of Birth",
                             hint: 'Select your date of birth',
                             hintfontSize: 12,
-                            hintColor: MyColors.hintColor,
-                            headingcolor: MyColors.hintColor,
+                            hintColor: MyColors.appSteelGrey,
+                            headingcolor: MyColors.appSteelGrey,
                             height: 13,
                             // Remove password-specific params like 'isObstructed' and 'suffIcons'
                             icon: Image(
@@ -286,7 +286,7 @@ class _SignupPageState extends State<SignupPage>
                         ),
                       ],
                     ),
-                        
+
                     SizedBox(height: 30),
                     Selector<LoginProvider, bool>(
                       selector: (p0, p1) => p1.isWorking,
@@ -297,7 +297,7 @@ class _SignupPageState extends State<SignupPage>
                             buttonName: value == true
                                 ? "Loading..."
                                 : "Continue",
-                        
+
                             onPressed: () {
                               final name = nameController.text.trim();
                               final email = emailController.text.trim();
@@ -305,7 +305,7 @@ class _SignupPageState extends State<SignupPage>
                               final dob = dobController.text.trim();
                               final loginProvider = context
                                   .read<LoginProvider>();
-                        
+
                               // final password = passController.text.trim();
                               // if (!_formKey.currentState!.validate()) {
                               //   return "required";
@@ -319,7 +319,7 @@ class _SignupPageState extends State<SignupPage>
                                   gender: gender,
                                   dateofbirth: dob,
                                   token: token,
-                                  userRole: 4
+                                  userRole: 4,
                                 ),
                               );
                               if (_formKey.currentState!.validate()) {
@@ -349,7 +349,7 @@ class _SignupPageState extends State<SignupPage>
                           text: TextSpan(
                             text: "Already have an Account !",
                             style: GoogleFonts.inter(
-                              color: MyColors.hintColor,
+                              color: MyColors.appSteelGrey,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),

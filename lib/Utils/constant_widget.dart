@@ -211,7 +211,7 @@ class CustomWidgets {
               labelText: label,
               labelStyle: TextStyle(
                 fontFamily: 'san-serif',
-                color: MyColors.hintColor,
+                color: MyColors.appSteelGrey,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),

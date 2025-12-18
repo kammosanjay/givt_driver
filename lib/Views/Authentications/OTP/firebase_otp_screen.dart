@@ -177,7 +177,7 @@ class _OtpScreenByfireaseState extends State<OtpScreenByfirease>
                   style: GoogleFonts.inter(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    color: MyColors.hintColor,
+                    color: MyColors.appSteelGrey,
                   ),
                 ),
                 SizedBox(height: 20),
@@ -230,7 +230,7 @@ class _OtpScreenByfireaseState extends State<OtpScreenByfirease>
                     text: TextSpan(
                       text: "Don't Received OTP ? ",
                       style: GoogleFonts.inter(
-                        color: MyColors.hintColor,
+                        color: MyColors.appSteelGrey,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),

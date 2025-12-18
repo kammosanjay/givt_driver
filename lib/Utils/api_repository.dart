@@ -4,6 +4,7 @@ import 'package:givt_driver_app/Views/Authentications/loginpage/login_provider.d
 import 'package:givt_driver_app/Views/Authentications/signUpPage/signupModal.dart';
 import 'package:givt_driver_app/Utils/api_client.dart';
 import 'package:givt_driver_app/Utils/api_constant.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/profilemodal.dart';
 
 class ApiRepository {
   // mobile Registration
@@ -132,5 +133,49 @@ class ApiRepository {
     );
 
     return result;
+  }
+
+  ///
+  // profile info
+
+  static Future<Response<dynamic>?> profileInfo() async {
+    final Response<dynamic>? response = await ApiClient().getApi(
+      url: ApiConstant.profileInfo,
+    );
+
+    return response;
+  }
+
+  ///
+  static Future<Response<dynamic>?> editProfile({
+    ProfileModal? profileModal,
+  }) async {
+    final Response<dynamic>? response = await ApiClient().postApi(
+      profileModal!.toJson(),
+      url: ApiConstant.editProfilInfo,
+    );
+
+    return response;
+  }
+
+  ///
+  static Future<Response<dynamic>?> contentPages({String? pageName}) async {
+    final Response<dynamic>? response = await ApiClient().postApi({
+      'page_name': pageName,
+    }, url: ApiConstant.getStaticPageContents);
+
+    return response;
+  }
+
+  ///
+  ///
+  // change mobile
+
+  static Future<Response<dynamic>?> changeMobile({String? mobile}) async {
+    final Response<dynamic>? response = await ApiClient().postApi({
+      'mobile_number': mobile,
+    }, url: ApiConstant.changeMobNum);
+
+    return response;
   }
 }

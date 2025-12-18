@@ -23,7 +23,7 @@ class PinscreenLoginPage extends StatefulWidget {
 class _PinscreenLoginPageState extends State<PinscreenLoginPage>
     with SingleTickerProviderStateMixin {
   bool isShown = true;
-   AnimationController? _controller;
+  // AnimationController? _controller;
   bool moveLeft = false;
   bool showText = false;
   TextEditingController pinController = TextEditingController();
@@ -64,11 +64,11 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
     }
   }
 
-  @override
-  void dispose() {
-    _controller!.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller!.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -99,13 +99,11 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: isDarkEnabled
-                          ? Colors.white
-                          : MyColors.primaryColor,
+                      color: isDarkEnabled ? Colors.white : MyColors.primaryColor,
                     ),
                   ),
                 ),
-
+        
                 // Moving logo
                 AnimatedAlign(
                   alignment: moveLeft ? Alignment.centerLeft : Alignment.center,
@@ -113,8 +111,8 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                   curve: Curves.easeInOut,
                   child: Image.asset(
                     'assets/images/couponlogo.png',
-                    height: 120,
-                    width: 120,
+                    height: 80,
+                    width: 80,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -124,7 +122,7 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               margin: EdgeInsets.symmetric(horizontal: 15),
-              height: MediaQuery.of(context).size.height * 0.6,
+              // height: MediaQuery.of(context).size.height * 0.6,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -145,10 +143,11 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
               ),
               child: Column(
                 children: [
-                  SizedBox(height: 30),
+                  SizedBox(height: 10),
                   Text(
                     'Enter Your 6-digit PIN',
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'san-serif',
                       fontSize: 25,
                       fontWeight: FontWeight.w900,
                       color: MyColors.bodyTextColor,
@@ -156,13 +155,14 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                   ),
                   Text(
                     'Access the App faster with a PIN',
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'san-serif',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: MyColors.bodyTextColor,
                     ),
                   ),
-
+                        
                   SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -177,7 +177,7 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                       enablePinAutofill: true,
                       pinTheme: PinTheme(
                         shape: PinCodeFieldShape.circle,
-
+                        
                         fieldHeight: 40,
                         fieldWidth: 40,
                         activeFillColor: Colors.white,
@@ -208,7 +208,8 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                     },
                     child: Text(
                       "Forgot PIN ?",
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'san-serif',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: MyColors.bodyTextColor,
@@ -218,7 +219,7 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                   SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-
+                        
                     children: [
                       Column(
                         children: [
@@ -230,7 +231,8 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                           ),
                           Text(
                             "FingerPrint",
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
+                              fontFamily: 'san-serif',
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               color: MyColors.bodyTextColor,
@@ -249,7 +251,8 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                           ),
                           Text(
                             "FaceID",
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
+                              fontFamily: 'san-serif',
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               color: MyColors.bodyTextColor,
@@ -259,10 +262,11 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                       ),
                     ],
                   ),
-                  Spacer(),
+                        
                   Text(
                     'Your privacy matters—enter the code for secure access',
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'san-serif',
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       color: MyColors.bodyTextColor,
@@ -272,38 +276,22 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                   CustomWidgets.customButton(
                     context: context,
                     height: 60,
-
+                        
                     buttonName: 'Submit',
                     onPressed: () {
                       final pin = pinController.text.trim();
                       final loginProvider = context.read<LoginProvider>();
-
+                        
                       // loginProvider.verifyUserPin(pin, context);
-                      context.read<RouteProvider>().navigateTo('/home', context);
+                      context.read<RouteProvider>().navigateTo(
+                        '/home',
+                        context,
+                      );
                     },
                     fontWeight: FontWeight.w900,
                     fontSize: 18,
                     fontColor: Colors.white,
                     btnColor: MyColors.primaryColor,
-                  ),
-                  SizedBox(height: 10),
-                  InkWell(
-                    onTap: () {
-                      context.read<RouteProvider>().navigateReplace(
-                        '/loginpage',
-                        context,
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Login",
-                        style: GoogleFonts.inter(
-                          color: MyColors.bodyTextColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
                   ),
                   SizedBox(height: 20),
                 ],

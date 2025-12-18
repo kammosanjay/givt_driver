@@ -3,10 +3,38 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ApiClient {
-   Dio dio = Dio();
+  final Dio dio = Dio();
+  ApiClient() {
+    apiClient();
+  }
 
   // Post Api
- 
+  ///
+  ///
+  apiClient() {
+    final box = GetStorage();
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          // Add Authorization header or log request
+          options.headers['Authorization'] = 'Bearer ${box.read('token')}';
+          options.headers['accept'] = 'application/json';
+          print('Request: ${options.method} ${options.path}');
+          return handler.next(options); // continue
+        },
+        onResponse: (response, handler) {
+          print('Response: ${response.statusCode}');
+          return handler.next(response); // continue
+        },
+        onError: (error, handler) {
+          print('Error: ${error.message}');
+          // Optionally retry or handle error globally
+          return handler.next(error); // continue
+        },
+      ),
+    );
+  }
+
   Future<Response<dynamic>?> postApi(
     Map<String, dynamic> map, {
     required String url,
@@ -119,9 +147,4 @@ class ApiClient {
       return null;
     }
   }
-
-  
-
-
-
 }

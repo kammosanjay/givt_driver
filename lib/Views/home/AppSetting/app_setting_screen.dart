@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_driver_app/MyPageRoute/route_provider.dart';
+import 'package:givt_driver_app/Views/home/AppSetting/profile_provider.dart';
 import 'package:givt_driver_app/Views/language/language.dart';
 import 'package:givt_driver_app/Views/Authentications/loginpage/login_provider.dart';
 import 'package:givt_driver_app/Views/theme/theme_provider.dart';
@@ -18,9 +19,61 @@ class AppSettingsPage extends StatefulWidget {
 }
 
 class _AppSettingsPageState extends State<AppSettingsPage> {
+  void applang() {
+    final isDarkEnabled = Theme.of(context).brightness == Brightness.dark;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: isDarkEnabled
+              ? Colors.white
+              : MyColors.secondaryColor,
+          title: Text(
+            "Language",
+            style: TextStyle(
+              fontFamily: 'san-serif',
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: MyColors.bodyText,
+            ),
+          ),
+          content: DropdownButton<String>(
+            value: context.watch<Language>().selectectLocale.languageCode,
+            items: Language.languages
+                .map(
+                  (e) => DropdownMenuItem<String>(
+                    value: e['locale'],
+                    child: Text(
+                      e['name'],
+                      style: TextStyle(
+                        fontFamily: 'san-serif',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: MyColors.bodyText,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+            dropdownColor: isDarkEnabled
+                ? MyColors.backgroundColor
+                : MyColors.backgroundColor,
+            onChanged: (value) {
+              if (value != null) {
+                context.read<Language>().changeLanguage(value);
+                Navigator.pop(context);
+              }
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isDarkEnabled = Theme.brightnessOf(context) == Brightness.dark;
     final appLoc = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -35,12 +88,17 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/person.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
                 title: "Edit Profile",
-                onTap: () {}, // Navigate to Edit Profile
+                onTap: () {
+                  context.read<RouteProvider>().navigateTo(
+                    '/editProfile',
+                    context,
+                  );
+                }, // Navigate to Edit Profile
               ),
               CustomWidgets.gap_10,
               SettingsTile(
@@ -48,7 +106,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/change_pin.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
@@ -66,12 +124,17 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/changenum.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
                 title: "Change Mobile Number",
-                onTap: () {}, // Change password
+                onTap: () {
+                  context.read<RouteProvider>().navigateTo(
+                    '/changeMobNum',
+                    context,
+                  );
+                }, // Change password
               ),
 
               // --- Appearance
@@ -91,17 +154,18 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               SettingsTile(
                 img: Image.asset(
                   'assets/images/langone.png',
+                  color: isDarkEnabled ? Colors.white : MyColors.primaryColor,
                   height: 22,
                   width: 22,
-                  color: isDarkMode
-                      ? MyColors.backgroundColor
-                      : MyColors.primaryColor,
                 ),
-                onTap: () {
-                  applang();
-                },
+                onTap: applang,
                 title: "App Language",
-                trailing: applang(),
+                trailing: Image.asset(
+                  'assets/images/translation.png',
+                  height: 20,
+                  width: 20,
+                  color: isDarkEnabled ? Colors.white : MyColors.bodyText,
+                ),
               ),
 
               CustomWidgets.gap_10,
@@ -112,12 +176,14 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/faqimgs.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
                 title: "FAQ's",
-                onTap: () {},
+                onTap: () {
+                  context.read<RouteProvider>().navigateTo('/FAQ', context);
+                },
               ),
               CustomWidgets.gap_10,
               SettingsTile(
@@ -125,12 +191,21 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/pp.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
                 title: "Privacy Policy",
-                onTap: () {},
+                onTap: () {
+                  context.read<RouteProvider>().navigateTo(
+                    '/privacyPolicy',
+                    context,
+                  );
+                  context.read<ProfileProvider>().pageContent(
+                    'privacy_policy',
+                    context,
+                  );
+                },
               ),
 
               CustomWidgets.gap_10,
@@ -141,13 +216,17 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/aboutapp.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
                 title: "About App",
                 onTap: () {
                   context.read<RouteProvider>().navigateTo('/about', context);
+                  context.read<ProfileProvider>().pageContent(
+                    'about_app',
+                    context,
+                  );
                 },
               ),
               CustomWidgets.gap_10,
@@ -156,12 +235,21 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/cusimg.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
                 title: "Customer Support Information",
-                onTap: () {},
+                onTap: () {
+                  context.read<RouteProvider>().navigateTo(
+                    '/customerSupp',
+                    context,
+                  );
+                  context.read<ProfileProvider>().pageContent(
+                    'customer_support',
+                    context,
+                  );
+                },
               ),
               CustomWidgets.gap_10,
               SettingsTile(
@@ -169,7 +257,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   'assets/images/logoutdone.png',
                   height: 22,
                   width: 22,
-                  color: isDarkMode
+                  color: isDarkEnabled
                       ? MyColors.backgroundColor
                       : MyColors.primaryColor,
                 ),
@@ -212,103 +300,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  applang() {
-    final isDarkEnabled = Theme.brightnessOf(context) == Brightness.dark;
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              backgroundColor: isDarkEnabled
-                  ? Colors.white
-                  : MyColors.secondaryColor,
-              title: Text(
-                "Language",
-                style: GoogleFonts.inter(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900,
-                  color: MyColors.bodyTextColor,
-                ),
-              ),
-              content: DropdownButton<String>(
-                alignment: Alignment(0, 10),
-                autofocus: true,
-                dropdownColor: isDarkEnabled
-                    ? Colors.white
-                    : MyColors.secondaryColor,
-                icon: Icon(
-                  Icons.language_outlined,
-                  color: MyColors.primaryColor,
-                ),
-
-                menuWidth: 120.0,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                value: context.watch<Language>().selectectLocale.languageCode,
-                items: Language.languages
-                    .map(
-                      (e) => DropdownMenuItem<String>(
-                        value: e['locale'],
-                        child: Text(
-                          e['name'],
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: MyColors.bodyTextColor,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    context.read<Language>().changeLanguage(value);
-                    print(value);
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    "Close",
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: MyColors.primaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          // color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade100,
-              blurRadius: 10,
-              // spreadRadius: 5,
-              offset: Offset(10, 5),
-            ),
-          ],
-        ),
-        child: Image.asset(
-          'assets/images/translation.png',
-          height: 20,
-          width: 20,
-          color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.white
-              : MyColors.textColor,
         ),
       ),
     );

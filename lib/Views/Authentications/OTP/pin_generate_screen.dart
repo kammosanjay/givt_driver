@@ -153,7 +153,7 @@ class _GeneratePinPageState extends State<GeneratePinPage>
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: MyColors.hintColor,
+                      color: MyColors.appSteelGrey,
                     ),
                   ),
             
@@ -198,7 +198,7 @@ class _GeneratePinPageState extends State<GeneratePinPage>
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: MyColors.hintColor,
+                      color: MyColors.appSteelGrey,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -220,7 +220,7 @@ class _GeneratePinPageState extends State<GeneratePinPage>
                             style: GoogleFonts.inter(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: MyColors.hintColor,
+                              color: MyColors.appSteelGrey,
                             ),
                           ),
                         ],
@@ -239,7 +239,7 @@ class _GeneratePinPageState extends State<GeneratePinPage>
                             style: GoogleFonts.inter(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: MyColors.hintColor,
+                              color: MyColors.appSteelGrey,
                             ),
                           ),
                         ],
@@ -252,7 +252,7 @@ class _GeneratePinPageState extends State<GeneratePinPage>
                     style: GoogleFonts.inter(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: MyColors.hintColor,
+                      color: MyColors.appSteelGrey,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -283,7 +283,7 @@ class _GeneratePinPageState extends State<GeneratePinPage>
                       text: TextSpan(
                         text: "Don't Received OTP ? ",
                         style: GoogleFonts.inter(
-                          color: MyColors.hintColor,
+                          color: MyColors.appSteelGrey,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),

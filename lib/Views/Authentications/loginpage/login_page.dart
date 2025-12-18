@@ -164,7 +164,7 @@ class _LoginPageState extends State<LoginPage>
                             fontFamily: 'san-serif',
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
-                            color: MyColors.hintColor,
+                            color: MyColors.appSteelGrey,
                           ),
                         ),
                       ),
@@ -181,10 +181,10 @@ class _LoginPageState extends State<LoginPage>
 
                               hintfontWeight: FontWeight.normal,
                               fontwgt: FontWeight.w600,
-                              headingcolor: MyColors.hintColor,
+                              headingcolor: MyColors.appSteelGrey,
                               hint: 'Enter your mobile number',
 
-                              hintColor: MyColors.hintColor,
+                              hintColor: MyColors.appSteelGrey,
                               controller: mobileController,
                               keyboardtype: TextInputType.number,
                               icon: Image(
