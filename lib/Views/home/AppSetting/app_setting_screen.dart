@@ -275,10 +275,11 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   children: [
                     Text(
                       'Night Mode',
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'san-serif',
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Theme.of(context).brightness == Brightness.dark
+                        color: isDarkEnabled
                             ? Colors.white
                             : MyColors.textColor,
                       ),
@@ -306,15 +307,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
   }
 }
 
-Future showbutton(BuildContext context) {
-  return showModalBottomSheet(
-    context: context,
-    builder: (context) {
-      return Container(height: 300, color: Colors.amber);
-    },
-  );
-}
-
 logout(BuildContext context) {
   showDialog(
     context: context,
@@ -324,21 +316,21 @@ logout(BuildContext context) {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.red
+              ? MyColors.primaryColor
               : MyColors.secondaryColor,
           boxShadow: [
             BoxShadow(
               color: MyColors.backgroundColor,
               // color: Colors. grey,
-              offset: Offset(-10, -10),
-              blurRadius: 30,
+              offset: Offset(-2, -2),
+              blurRadius: 5,
 
               // inset: false,
             ),
             BoxShadow(
               color: MyColors.textColor,
-              offset: Offset(10, 10),
-              blurRadius: 30,
+              offset: Offset(2, 2),
+              blurRadius: 5,
 
               // inset: true,
             ),
@@ -351,7 +343,8 @@ logout(BuildContext context) {
             children: [
               Text(
                 "Confirm Logout",
-                style: GoogleFonts.inter(
+                style: TextStyle(
+                  fontFamily: 'san-serif',
                   fontSize: 20,
                   fontWeight: FontWeight.w900,
                   color: Theme.of(context).brightness == Brightness.dark
@@ -361,8 +354,9 @@ logout(BuildContext context) {
               ),
               const SizedBox(height: 16),
               Text(
-                "Are you sure you want to logout?",
-                style: GoogleFonts.inter(
+                "Are you sure you want to Logout?",
+                style: TextStyle(
+                  fontFamily: 'san-serif',
                   fontSize: 15,
                   fontWeight: FontWeight.w900,
                   color: Theme.of(context).brightness == Brightness.dark
@@ -379,7 +373,8 @@ logout(BuildContext context) {
                     onPressed: () => Navigator.pop(context),
                     child: Text(
                       "Cancel",
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'san-serif',
                         fontSize: 14,
                         fontWeight: FontWeight.w900,
                         color: Theme.of(context).brightness == Brightness.dark
@@ -395,7 +390,8 @@ logout(BuildContext context) {
                     },
                     child: Text(
                       "Logout",
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'san-serif',
                         fontSize: 14,
                         fontWeight: FontWeight.w900,
                         color: Theme.of(context).brightness == Brightness.dark
@@ -436,7 +432,8 @@ class SettingsTile extends StatelessWidget {
       leading: img,
       title: Text(
         title,
-        style: GoogleFonts.inter(
+        style: TextStyle(
+          fontFamily: 'san-serif',
           fontSize: 14,
           fontWeight: FontWeight.w600,
           color: Theme.brightnessOf(context) == Brightness.dark

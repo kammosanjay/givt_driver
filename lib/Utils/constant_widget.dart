@@ -248,9 +248,10 @@ class CustomWidgets {
   ///Button Widget
 
   static Widget customButton({
-    required BuildContext context, // Pass BuildContext as a parameter
+    required BuildContext context,
     dynamic buttonName,
     VoidCallback? onPressed,
+    bool isLoading = false, // 👈 add this
     double? width,
     double? height,
     Color? btnColor,
@@ -260,31 +261,39 @@ class CustomWidgets {
     FontWeight? fontWeight,
   }) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed, // 👈 disable when loading
       style: ElevatedButton.styleFrom(
         fixedSize: Size(
           width ?? MediaQuery.of(context).size.width,
           height ?? 50,
-        ), // Width: 200, Height: 50
-        backgroundColor:
-            btnColor ?? Colors.blue, // Default color if btnColor is null
+        ),
+        backgroundColor: btnColor ?? Colors.blue,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            radius ?? 10,
-          ), // Set border radius
-        ), // Button color
-      ),
-      child: FittedBox(
-        child: Text(
-          buttonName ?? 'Button',
-          style: TextStyle(
-            fontFamily: 'san-serif',
-            fontSize: fontSize ?? 12,
-            fontWeight: fontWeight ?? FontWeight.w600,
-            color: fontColor, // Text color
-          ),
+          borderRadius: BorderRadius.circular(radius ?? 10),
         ),
       ),
+      child: isLoading
+          ? SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  fontColor ?? Colors.white,
+                ),
+              ),
+            )
+          : FittedBox(
+              child: Text(
+                buttonName ?? 'Button',
+                style: TextStyle(
+                  fontFamily: 'san-serif',
+                  fontSize: fontSize ?? 12,
+                  fontWeight: fontWeight ?? FontWeight.w600,
+                  color: fontColor ?? Colors.white,
+                ),
+              ),
+            ),
     );
   }
 

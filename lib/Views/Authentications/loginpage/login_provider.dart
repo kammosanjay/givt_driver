@@ -166,8 +166,6 @@ class LoginProvider extends ChangeNotifier {
     }
   }
 
-  
-  
   Future<Map<String, dynamic>?> saveSignupData(SignupData signupData) async {
     isWorking = true;
     notifyListeners();
@@ -294,34 +292,48 @@ class LoginProvider extends ChangeNotifier {
 
   //
   Future<void> verifyUserPin(String pin, BuildContext context) async {
-    final response = await ApiRepository.validateuserbyPIN(pin: pin);
-    debugPrint("PinPageResponse=> $response");
-
-    userExitMessage = response!.data['message'];
+    isLoading = true;
     notifyListeners();
+    try {
+      final response = await ApiRepository.validateuserbyPIN(pin: pin);
+      debugPrint("PinPageResponse=> $response");
 
-    if (response.data['success'] == true) {
-      FlutterToastr.show(
-        response.data['message'],
-        context,
-        duration: FlutterToastr.lengthLong,
-        position: FlutterToastr.bottom,
-        backgroundColor: Colors.green,
-      );
+      userExitMessage = response!.data['message'];
+      notifyListeners();
 
-      context.read<RouteProvider>().navigateTo('/home', context);
-      return;
-    } else {
-      debugPrint('testing2');
+      if (response.data['success'] == true) {
+        FlutterToastr.show(
+          response.data['message'],
+          context,
+          duration: FlutterToastr.lengthLong,
+          position: FlutterToastr.bottom,
+          backgroundColor: Colors.green,
+        );
+
+        context.read<RouteProvider>().navigateTo('/home', context);
+        return;
+      } else {
+        debugPrint('testing2');
+        FlutterToastr.show(
+          response.data['message'],
+          context,
+          duration: FlutterToastr.lengthShort,
+          position: FlutterToastr.bottom,
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
       FlutterToastr.show(
-        response.data['message'],
+        e.toString(),
         context,
         duration: FlutterToastr.lengthShort,
         position: FlutterToastr.bottom,
         backgroundColor: Colors.red,
       );
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
-    return;
   }
 
   Future<void> logout(BuildContext context) async {

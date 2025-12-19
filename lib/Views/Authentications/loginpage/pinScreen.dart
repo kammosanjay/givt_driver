@@ -99,11 +99,13 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: isDarkEnabled ? Colors.white : MyColors.primaryColor,
+                      color: isDarkEnabled
+                          ? Colors.white
+                          : MyColors.primaryColor,
                     ),
                   ),
                 ),
-        
+
                 // Moving logo
                 AnimatedAlign(
                   alignment: moveLeft ? Alignment.centerLeft : Alignment.center,
@@ -162,7 +164,7 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                       color: MyColors.bodyTextColor,
                     ),
                   ),
-                        
+
                   SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -177,7 +179,7 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                       enablePinAutofill: true,
                       pinTheme: PinTheme(
                         shape: PinCodeFieldShape.circle,
-                        
+
                         fieldHeight: 40,
                         fieldWidth: 40,
                         activeFillColor: Colors.white,
@@ -219,7 +221,7 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                   SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                        
+
                     children: [
                       Column(
                         children: [
@@ -262,7 +264,7 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                       ),
                     ],
                   ),
-                        
+
                   Text(
                     'Your privacy matters—enter the code for secure access',
                     style: TextStyle(
@@ -273,25 +275,30 @@ class _PinscreenLoginPageState extends State<PinscreenLoginPage>
                     ),
                   ),
                   SizedBox(height: 10),
-                  CustomWidgets.customButton(
-                    context: context,
-                    height: 60,
-                        
-                    buttonName: 'Submit',
-                    onPressed: () {
-                      final pin = pinController.text.trim();
-                      final loginProvider = context.read<LoginProvider>();
-                        
-                      // loginProvider.verifyUserPin(pin, context);
-                      context.read<RouteProvider>().navigateTo(
-                        '/home',
-                        context,
+                  Selector<LoginProvider, bool>(
+                    selector: (p0, p1) => p1.isLoading,
+                    builder: (context, verify, child) {
+                      return CustomWidgets.customButton(
+                        context: context,
+                        height: 60,
+                        isLoading: verify,
+                        buttonName: 'Submit',
+                        onPressed: () {
+                          final pin = pinController.text.trim();
+                          final loginProvider = context.read<LoginProvider>();
+
+                          loginProvider.verifyUserPin(pin, context);
+                          // context.read<RouteProvider>().navigateTo(
+                          //   '/home',
+                          //   context,
+                          // );
+                        },
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                        fontColor: Colors.white,
+                        btnColor: MyColors.primaryColor,
                       );
                     },
-                    fontWeight: FontWeight.w900,
-                    fontSize: 18,
-                    fontColor: Colors.white,
-                    btnColor: MyColors.primaryColor,
                   ),
                   SizedBox(height: 20),
                 ],
