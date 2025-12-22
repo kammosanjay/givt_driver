@@ -178,4 +178,26 @@ class ApiRepository {
 
     return response;
   }
+
+  ///
+  ///
+  static Future<Response<dynamic>?> scanVoucher({String? vCode}) async {
+    final Response<dynamic>? response = await ApiClient().postApi({
+      'voucher_code': vCode,
+    }, url: ApiConstant.scanVoucherCode);
+
+    return response;
+  }
+
+  ///
+  ///
+  static Future<Response<dynamic>?> getScannedVoucherList({
+    String? date,
+  }) async {
+    final Response<dynamic>? response = await ApiClient().getApi(
+      url: ApiConstant.getScannedVoucherList,
+    );
+
+    return response;
+  }
 }

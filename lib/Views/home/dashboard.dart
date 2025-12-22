@@ -7,8 +7,8 @@ import 'package:givt_driver_app/Views/home/Coupon/coupon_homepage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_driver_app/Views/home/Coupon/qr_code.dart';
 
-import 'package:givt_driver_app/Views/home/Survey/activity_page.dart';
-import 'package:givt_driver_app/Views/home/Wallet/wallet_screen.dart';
+import 'package:givt_driver_app/Views/home/Activity/activity_page.dart';
+import 'package:givt_driver_app/Views/home/History/history.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,7 +38,7 @@ class _MyHomeState extends State<MyHome> {
     // CouponHomepage(),
     MobileScannerScreen(),
     ActivityPage(),
-    WalletScreen(),
+    CouponsHistory(),
     AppSettingsPage(),
   ];
 

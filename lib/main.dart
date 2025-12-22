@@ -3,6 +3,7 @@ import 'package:givt_driver_app/Views/Authentications/ForgotPIN/forgot_pin_scree
 import 'package:givt_driver_app/Views/Authentications/OTP/firebase_otp_screen.dart';
 import 'package:givt_driver_app/Views/Authentications/OTP/pin_generate_screen.dart';
 import 'package:givt_driver_app/Views/ChangePinScreen/change_pin_screen.dart';
+import 'package:givt_driver_app/Views/home/Activity/activity_provider.dart';
 import 'package:givt_driver_app/Views/home/AppSetting/aboutScreen.dart';
 import 'package:givt_driver_app/Views/home/AppSetting/about_appscreen.dart';
 
@@ -15,11 +16,10 @@ import 'package:givt_driver_app/Views/home/AppSetting/privacy_policy.dart';
 import 'package:givt_driver_app/Views/home/AppSetting/profile_provider.dart';
 import 'package:givt_driver_app/Views/home/Coupon/coupon_provider.dart';
 import 'package:givt_driver_app/Views/home/Coupon/qr_code.dart';
-import 'package:givt_driver_app/Views/home/Survey/activity_page.dart';
-import 'package:givt_driver_app/Views/home/Wallet/wallet_screen.dart';
+import 'package:givt_driver_app/Views/home/Activity/activity_page.dart';
+import 'package:givt_driver_app/Views/home/History/history.dart';
 import 'package:givt_driver_app/Views/home/Coupon/coupon_homepage.dart';
 
-import 'package:givt_driver_app/Views/home/Survey/surveyScreen.dart';
 import 'package:givt_driver_app/Views/Authentications/loginpage/pinScreen.dart';
 import 'package:givt_driver_app/Views/home/Coupon/coupon_detaill_screen.dart';
 import 'package:givt_driver_app/Views/Authentications/loginpage/login_provider.dart';
@@ -61,6 +61,9 @@ void main() async {
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
         ChangeNotifierProvider<ProfileProvider>(
           create: (_) => ProfileProvider(),
+        ),
+        ChangeNotifierProvider<ActivityProvider>(
+          create: (_) => ActivityProvider(),
         ),
       ],
       child: MyApp(),

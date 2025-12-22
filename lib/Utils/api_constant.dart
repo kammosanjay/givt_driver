@@ -48,4 +48,10 @@ class ApiConstant {
 
   ///
   static String getStaticPageContents = '${baseUrl}get-static-page-information';
+
+  ///
+  static String scanVoucherCode = '${baseUrl}scan-vouchers';
+
+  ///
+  static String getScannedVoucherList = '${baseUrl}delivered-vouchers';
 }

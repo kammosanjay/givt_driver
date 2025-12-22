@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:givt_driver_app/Utils/appColor.dart';
 import 'package:givt_driver_app/Utils/constant_widget.dart';
+import 'package:givt_driver_app/Views/home/Activity/activity_provider.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 
 class MobileScannerScreen extends StatefulWidget {
   @override
@@ -93,27 +95,13 @@ class _MobileScannerScreenState extends State<MobileScannerScreen> {
                                 setState(() {
                                   isStart = true;
                                 });
+                                context.read<ActivityProvider>().scannedVoucher(
+                                  _barcode?.displayValue,
+                                  context,
+                                );
                               },
                               btnColor: MyColors.primaryColor,
                               fontColor: MyColors.backgroundColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomWidgets.customButton(
-                              buttonName: 'Stop scanner',
-                              height: 50,
-                              context: context,
-                              onPressed: () async {
-                                await controller
-                                    .stop(); // Starts the camera and barcode scanning
-                                setState(() {
-                                  isStart = true;
-                                });
-                              },
-                              fontColor: MyColors.backgroundColor,
-                              btnColor: MyColors.primaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),

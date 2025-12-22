@@ -8,14 +8,14 @@ import 'package:givt_driver_app/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class WalletScreen extends StatefulWidget {
-  const WalletScreen({super.key});
+class CouponsHistory extends StatefulWidget {
+  const CouponsHistory({super.key});
 
   @override
-  State<WalletScreen> createState() => _WalletScreenState();
+  State<CouponsHistory> createState() => _CouponsHistoryState();
 }
 
-class _WalletScreenState extends State<WalletScreen> {
+class _CouponsHistoryState extends State<CouponsHistory> {
   late Databasetwo db;
   List<Map<String, dynamic>> list = [];
   bool isDbReady = false;
