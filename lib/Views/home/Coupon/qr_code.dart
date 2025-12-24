@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:givt_driver_app/Utils/appColor.dart';
 import 'package:givt_driver_app/Utils/constant_widget.dart';
 import 'package:givt_driver_app/Views/home/Activity/activity_provider.dart';
+import 'package:http/http.dart' show read;
+
 import 'package:lottie/lottie.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:path/path.dart';
@@ -36,7 +38,7 @@ class _MobileScannerScreenState extends State<MobileScannerScreen> {
               style: TextStyle(color: Colors.white),
             )
           : Opacity(
-              opacity: .4,
+              opacity: 0.4,
               child: Lottie.asset(
                 'assets/lottie/qrcode.json',
                 height: 150,
@@ -52,11 +54,26 @@ class _MobileScannerScreenState extends State<MobileScannerScreen> {
     );
   }
 
-  void _handleBarcode(BarcodeCapture result) {
-    if (mounted) {
+  bool _apiCalled = false; // prevent multiple hits
+
+  void _handleBarcode(BarcodeCapture result, BuildContext context) {
+    final barcode = result.barcodes.firstOrNull;
+
+    if (barcode == null) return;
+
+    if (!_apiCalled && mounted) {
+      _apiCalled = true;
+
       setState(() {
-        _barcode = result.barcodes.firstOrNull;
+        _barcode = barcode;
       });
+
+      controller.stop(); // stop scanner after success
+
+      context.read<ActivityProvider>().scannedVoucher(
+        barcode.displayValue,
+        context,
+      );
     }
   }
 
@@ -66,51 +83,63 @@ class _MobileScannerScreenState extends State<MobileScannerScreen> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          MobileScanner(controller: controller, onDetect: _handleBarcode),
+          MobileScanner(
+            controller: controller,
+            onDetect: (capture) => _handleBarcode(capture, context),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                // alignment: Alignment.bottomCenter,
-                // height: 200,
-                // color: const Color.fromRGBO(0, 0, 0, 0.4),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Center(child: _barcodePreview(_barcode)),
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Row(
-                        spacing: 10,
-                        children: [
-                          Expanded(
-                            child: CustomWidgets.customButton(
-                              buttonName: 'Start scanner',
-                              height: 50,
-                              context: context,
-                              onPressed: () async {
-                                await controller
-                                    .start(); // Starts the camera and barcode scanning
-                                setState(() {
-                                  isStart = true;
-                                });
-                                context.read<ActivityProvider>().scannedVoucher(
-                                  _barcode?.displayValue,
-                                  context,
-                                );
-                              },
-                              btnColor: MyColors.primaryColor,
-                              fontColor: MyColors.backgroundColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Center(child: _barcodePreview(_barcode)),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Row(
+                      spacing: 10,
+                      children: [
+                        Expanded(
+                          child: CustomWidgets.customButton(
+                            buttonName: 'Start scanner',
+                            height: 50,
+                            context: context,
+                            onPressed: () async {
+                              await controller
+                                  .start(); // Starts the camera and barcode scanning
+                              setState(() {
+                                isStart = true;
+                              });
+                            },
+                            btnColor: MyColors.primaryColor,
+                            fontColor: MyColors.backgroundColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          child: CustomWidgets.customButton(
+                            buttonName: 'Stop scanner',
+                            height: 50,
+                            context: context,
+                            onPressed: () async {
+                              await controller
+                                  .stop(); // Stops the camera and barcode scanning
+                              setState(() {
+                                isStart = false;
+                              });
+                            },
+                            btnColor: MyColors.primaryColor,
+                            fontColor: MyColors.backgroundColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

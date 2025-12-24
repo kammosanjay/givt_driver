@@ -4,6 +4,7 @@ import 'package:givt_driver_app/Views/Authentications/OTP/firebase_otp_screen.da
 import 'package:givt_driver_app/Views/Authentications/OTP/pin_generate_screen.dart';
 import 'package:givt_driver_app/Views/ChangePinScreen/change_pin_screen.dart';
 import 'package:givt_driver_app/Views/home/Activity/activity_provider.dart';
+import 'package:givt_driver_app/Views/home/Activity/detailedInfoScannedVou.dart';
 import 'package:givt_driver_app/Views/home/AppSetting/aboutScreen.dart';
 import 'package:givt_driver_app/Views/home/AppSetting/about_appscreen.dart';
 
@@ -27,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:givt_driver_app/MyPageRoute/route_provider.dart';
+import 'package:givt_driver_app/Views/home/bottomnavProvider.dart';
 import 'package:givt_driver_app/Views/home/dashboard.dart';
 import 'package:givt_driver_app/Views/Authentications/loginpage/login_page.dart';
 import 'package:givt_driver_app/Views/Authentications/signUpPage/signup_page.dart';
@@ -64,6 +66,9 @@ void main() async {
         ),
         ChangeNotifierProvider<ActivityProvider>(
           create: (_) => ActivityProvider(),
+        ),
+        ChangeNotifierProvider<BottomNavProvider>(
+          create: (_) => BottomNavProvider(),
         ),
       ],
       child: MyApp(),
@@ -116,6 +121,8 @@ class MyApp extends StatelessWidget {
         '/changeMobNum': (context) => ChangeMobScreen(),
         '/privacyPolicy': (context) => Privaycypolicy(),
         '/editProfile': (context) => EditProfileScreen(),
+        '/detailedInfoScannedVoucher': (context) =>
+            DetailedInfoScannedVoucher(),
       },
     );
   }

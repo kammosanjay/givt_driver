@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:givt_driver_app/MyPageRoute/route_provider.dart';
 import 'package:givt_driver_app/Utils/appColor.dart';
 import 'package:givt_driver_app/Views/home/Activity/activity_provider.dart';
 import 'package:givt_driver_app/Views/home/Activity/scannedVouModal.dart';
@@ -24,7 +25,7 @@ class _ActivityPageState extends State<ActivityPage> {
         // Your function to be called after the first frame
         context
             .read<ActivityProvider>()
-            .getSannedVouchersList(); // Example function call from provider
+            .loadScannedVouchers(); // Example function call from provider
       });
     });
   }
@@ -68,8 +69,8 @@ class _ActivityPageState extends State<ActivityPage> {
                           maxLines: 1,
                           style: TextStyle(
                             fontFamily: 'sans-serif',
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
                             color: isDarkEnabled
                                 ? Colors.black
                                 : MyColors.bodyTextColor,
@@ -83,18 +84,18 @@ class _ActivityPageState extends State<ActivityPage> {
                                 text: "Vocher Code : ",
                                 style: TextStyle(
                                   fontFamily: 'sans-serif',
-                                  color: MyColors.bodyText,
+                                  color: MyColors.appSteelGrey,
                                   fontSize: 10,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
                               TextSpan(
                                 text: voucher!.voucherCode?.toString() ?? "-",
                                 style: const TextStyle(
                                   fontFamily: 'sans-serif',
-                                  fontSize: 9,
+                                  fontSize: 10,
                                   color: MyColors.bodyTextColor,
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -109,19 +110,19 @@ class _ActivityPageState extends State<ActivityPage> {
                                   const TextSpan(
                                     text: "Valid from : ",
                                     style: TextStyle(
-                                      color: MyColors.bodyText,
+                                      color: MyColors.appSteelGrey,
                                       fontSize: 10,
                                       fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.normal,
                                     ),
                                   ),
                                   TextSpan(
                                     text: voucher.validFrom?.toString() ?? "-",
                                     style: const TextStyle(
                                       color: MyColors.bodyTextColor,
-                                      fontSize: 9,
+                                      fontSize: 10,
                                       fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.normal,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
@@ -132,21 +133,21 @@ class _ActivityPageState extends State<ActivityPage> {
                               text: TextSpan(
                                 children: [
                                   const TextSpan(
-                                    text: "Valid Uptp : ",
+                                    text: "Valid Upto : ",
                                     style: TextStyle(
-                                      color: MyColors.bodyText,
+                                      color: MyColors.appSteelGrey,
                                       fontSize: 10,
                                       fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.normal,
                                     ),
                                   ),
                                   TextSpan(
                                     text: voucher.validUpto?.toString() ?? "-",
                                     style: const TextStyle(
                                       color: MyColors.bodyTextColor,
-                                      fontSize: 9,
+                                      fontSize: 10,
                                       fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.normal,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
@@ -160,19 +161,19 @@ class _ActivityPageState extends State<ActivityPage> {
                               const TextSpan(
                                 text: "Min Pur : ",
                                 style: TextStyle(
-                                  color: MyColors.bodyText,
+                                  color: MyColors.appSteelGrey,
                                   fontSize: 10,
                                   fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
                               TextSpan(
                                 text: voucher.minPurchase?.toString() ?? "-",
                                 style: const TextStyle(
                                   color: MyColors.bodyTextColor,
-                                  fontSize: 9,
+                                  fontSize: 10,
                                   fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -184,19 +185,19 @@ class _ActivityPageState extends State<ActivityPage> {
                               const TextSpan(
                                 text: "Max Discount : ",
                                 style: TextStyle(
-                                  color: MyColors.bodyText,
+                                  color: MyColors.appSteelGrey,
                                   fontSize: 10,
                                   fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
                               TextSpan(
                                 text: voucher.maxDiscount?.toString() ?? "-",
                                 style: const TextStyle(
                                   color: MyColors.bodyTextColor,
-                                  fontSize: 9,
+                                  fontSize: 10,
                                   fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -281,37 +282,55 @@ class _ActivityPageState extends State<ActivityPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<ActivityProvider>().loadScannedVouchers();
+        },
+        child: const Icon(Icons.refresh),
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
-        child: FutureBuilder<List<ScannedVouModal>>(
-          future: context.read<ActivityProvider>().getSannedVouchersList(),
-          builder: (context, snapshot) {
-            // Loading
-            if (snapshot.connectionState == ConnectionState.waiting) {
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+        child: Consumer<ActivityProvider>(
+          builder: (context, provider, _) {
+            if (provider.scannedFuture == null) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            // Empty / error
-            if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text("No vouchers found"));
-            }
+            return FutureBuilder<List<ScannedVouModal>>(
+              future: provider.scannedFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-            final vouchers = snapshot.data!;
+                if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text("No vouchers found"));
+                }
 
-            return ListView.builder(
-              itemCount: vouchers.length,
-              itemBuilder: (context, index) {
-                final scanned = vouchers[index];
-                final voucher = scanned.voucher;
+                final vouchers = snapshot.data!;
 
-                return Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: voucherContainer(
-                    context,
-                    vouchers: vouchers[index],
-                    index: index,
-                  ),
+                return ListView.builder(
+                  itemCount: vouchers.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        // Handle voucher tap if needed
+                        context.read<RouteProvider>().navigateTo(
+                          '/detailedInfoScannedVoucher',
+                          context,
+                          arguments: vouchers[index],
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: voucherContainer(
+                          context,
+                          vouchers: vouchers[index],
+                          index: index,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             );

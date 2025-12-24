@@ -9,6 +9,7 @@ import 'package:givt_driver_app/Views/home/Coupon/qr_code.dart';
 
 import 'package:givt_driver_app/Views/home/Activity/activity_page.dart';
 import 'package:givt_driver_app/Views/home/History/history.dart';
+import 'package:givt_driver_app/Views/home/bottomnavProvider.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,8 +33,7 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-  var locationController = TextEditingController();
-  int _selectedIndex = 0;
+  //
   final List<Widget> _pages = [
     // CouponHomepage(),
     MobileScannerScreen(),
@@ -41,80 +41,6 @@ class _MyHomeState extends State<MyHome> {
     CouponsHistory(),
     AppSettingsPage(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index; // update selected index
-    });
-  }
-
-  // String? imagePath;
-
-  Future<void> aboutUs() async {
-    if (!await launchUrl(
-      Uri.parse("https://buat.edu.in/about-university/"),
-      mode: LaunchMode.inAppWebView,
-    )) {
-      throw Exception('Could not launch URL');
-    }
-  }
-
-  Future<void> privacyPolicy() async {
-    if (!await launchUrl(
-      Uri.parse("https://buat.edu.in/#"),
-      mode: LaunchMode.inAppWebView,
-    )) {
-      throw Exception('Could not launch URL');
-    }
-  }
-
-  Future<void> termsAndcdtn() async {
-    if (!await launchUrl(
-      Uri.parse("https://buat.edu.in/#"),
-      mode: LaunchMode.inAppWebView,
-    )) {
-      throw Exception('Could not launch URL');
-    }
-  }
-
-  Future<void> contactUs() async {
-    if (!await launchUrl(
-      Uri.parse("https://buat.edu.in/contact-us/"),
-      mode: LaunchMode.inAppWebView,
-    )) {
-      throw Exception('Could not launch URL');
-    }
-  }
-
-  Widget drawerLitTile({
-    required String title,
-    required String icon,
-    VoidCallback? ontap,
-  }) {
-    final isDarkEnabled = Theme.brightnessOf(context) == Brightness.dark;
-    return Container(
-      color: isDarkEnabled ? Colors.white : MyColors.secondaryColor,
-      child: ListTile(
-        title: Text(
-          title,
-          style: GoogleFonts.inter(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: MyColors.bodyTextColor,
-          ),
-        ),
-        trailing: SvgPicture.asset(icon, color: MyColors.textColor),
-        tileColor: AppColor.backgroundColor(context),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        onTap: ontap, // ✅ use the callback correctly
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +60,8 @@ class _MyHomeState extends State<MyHome> {
           elevation: 0,
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: _selectedIndex.isFinite
+          selectedItemColor:
+              context.watch<BottomNavProvider>().currentIndex.isFinite
               ? MyColors.primaryColor
               : Colors.black, // This shows all 5 items
           unselectedItemColor: Color(0xFF333333),
@@ -149,8 +76,10 @@ class _MyHomeState extends State<MyHome> {
             fontWeight: FontWeight.w600,
           ),
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+          currentIndex: context.watch<BottomNavProvider>().currentIndex,
+          onTap: (index) {
+            context.read<BottomNavProvider>().changeIndex(index);
+          },
           items: [
             BottomNavigationBarItem(
               tooltip: "Home",
@@ -159,7 +88,7 @@ class _MyHomeState extends State<MyHome> {
                 'assets/images/homeIcon.png',
                 height: 20,
                 width: 20,
-                color: _selectedIndex == 0
+                color: context.watch<BottomNavProvider>().currentIndex == 0
                     ? MyColors.primaryColor
                     : Colors.black45,
               ),
@@ -171,7 +100,7 @@ class _MyHomeState extends State<MyHome> {
                 'assets/images/surveyIcon.png',
                 height: 20,
                 width: 20,
-                color: _selectedIndex == 1
+                color: context.watch<BottomNavProvider>().currentIndex == 1
                     ? MyColors.primaryColor
                     : Colors.black45,
               ),
@@ -182,7 +111,7 @@ class _MyHomeState extends State<MyHome> {
                 'assets/images/walletIcon.png',
                 height: 20,
                 width: 20,
-                color: _selectedIndex == 2
+                color: context.watch<BottomNavProvider>().currentIndex == 2
                     ? MyColors.primaryColor
                     : Colors.black45,
               ),
@@ -193,7 +122,7 @@ class _MyHomeState extends State<MyHome> {
                 'assets/images/settingIcon.png',
                 height: 20,
                 width: 20,
-                color: _selectedIndex == 3
+                color: context.watch<BottomNavProvider>().currentIndex == 3
                     ? MyColors.primaryColor
                     : Colors.black45,
               ),
@@ -221,7 +150,10 @@ class _MyHomeState extends State<MyHome> {
           centerTitle: true,
         ),
 
-        body: _pages[_selectedIndex],
+        body: IndexedStack(
+          index: context.watch<BottomNavProvider>().currentIndex,
+          children: _pages,
+        ),
       ),
     );
   }
