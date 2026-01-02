@@ -29,13 +29,15 @@ class _SignupPageState extends State<SignupPage>
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
   DateTime? selectedDate;
   final TextEditingController dobController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late AnimationController _controller;
   bool moveLeft = false;
   bool showText = false;
-  String selectedGender = "👨 Male";
+  String selectedGender = "Male";
+  String salutation = "Mr";
 
   @override
   void initState() {
@@ -165,27 +167,85 @@ class _SignupPageState extends State<SignupPage>
                       ),
                     ),
                     SizedBox(height: 40),
-                    CustomWidgets.customTextFeild(
-                      context: context,
-                      hintfontSize: 14,
-                      name: 'Full Name',
-                      fontwgt: FontWeight.w600,
-                      headingcolor: MyColors.appSteelGrey,
-                      hint: 'Enter your Name',
-                      validate: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your Name';
-                        }
-                        // Simple email validation
-                      },
-                      hintColor: MyColors.appSteelGrey,
-                      controller: nameController,
-                      keyboardtype: TextInputType.text,
-                      icon: Image(
-                        image: AssetImage('assets/images/person.png'),
-                        height: 14,
-                        width: 18,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Salutation",
+                        style: TextStyle(
+                          fontFamily: 'san-serif',
+                          color: isDarkEnabled
+                              ? Colors.white
+                              : MyColors.bodyTextColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
+                    ),
+                    SizedBox(height: 10),
+                    CustomWidgets.customDropdownField(
+                      context: context,
+                      items: ['Mr', 'Miss', 'Mrs'],
+                      selectedItem: 'Mr',
+                      label: 'Salutation',
+                      height: 60,
+                      // readOnly: true,
+                      hint: 'Select Salutation',
+                      onChanged: (String? newValue) {
+                        // Handle selection change
+                        setState(() {
+                          salutation = newValue!;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      spacing: 10,
+                      children: [
+                        CustomWidgets.customTextFeild(
+                          context: context,
+                          hintfontSize: 14,
+                          name: 'First Name',
+                          fontwgt: FontWeight.w600,
+                          headingcolor: MyColors.appSteelGrey,
+                          hint: 'Enter your First Name',
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your Name';
+                            }
+                            // Simple email validation
+                          },
+                          hintColor: MyColors.appSteelGrey,
+                          controller: nameController,
+                          keyboardtype: TextInputType.text,
+                          icon: Image(
+                            image: AssetImage('assets/images/person.png'),
+                            height: 14,
+                            width: 18,
+                          ),
+                        ),
+                        CustomWidgets.customTextFeild(
+                          context: context,
+                          hintfontSize: 14,
+                          name: 'Last Name',
+                          fontwgt: FontWeight.w600,
+                          headingcolor: MyColors.appSteelGrey,
+                          hint: 'Enter your Name',
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your Last Name';
+                            }
+                            // Simple email validation
+                          },
+                          hintColor: MyColors.appSteelGrey,
+                          controller: lastnameController,
+                          keyboardtype: TextInputType.text,
+                          icon: Image(
+                            image: AssetImage('assets/images/person.png'),
+                            height: 14,
+                            width: 18,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 20),
 
@@ -301,6 +361,7 @@ class _SignupPageState extends State<SignupPage>
                             onPressed: () {
                               final name = nameController.text.trim();
                               final email = emailController.text.trim();
+                              final lnameC=lastnameController.text.trim();
                               final gender = selectedGender;
                               final dob = dobController.text.trim();
                               final loginProvider = context
@@ -316,6 +377,8 @@ class _SignupPageState extends State<SignupPage>
                                 SignupData(
                                   fullname: name,
                                   email: email,
+                                  lastName: lnameC,
+                                  salutation: salutation,
                                   gender: gender,
                                   dateofbirth: dob,
                                   token: token,
