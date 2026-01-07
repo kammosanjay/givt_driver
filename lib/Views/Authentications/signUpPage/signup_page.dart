@@ -166,28 +166,15 @@ class _SignupPageState extends State<SignupPage>
                         ),
                       ),
                     ),
-                    SizedBox(height: 40),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Salutation",
-                        style: TextStyle(
-                          fontFamily: 'san-serif',
-                          color: isDarkEnabled
-                              ? Colors.white
-                              : MyColors.bodyTextColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
+
                     CustomWidgets.customDropdownField(
                       context: context,
                       items: ['Mr', 'Miss', 'Mrs'],
-                      selectedItem: 'Mr',
-                      label: 'Salutation',
+                      selectedItem: salutation,
+                      label: '',
                       height: 60,
+
                       // readOnly: true,
                       hint: 'Select Salutation',
                       onChanged: (String? newValue) {
@@ -198,54 +185,51 @@ class _SignupPageState extends State<SignupPage>
                       },
                     ),
                     SizedBox(height: 20),
-                    Row(
-                      spacing: 10,
-                      children: [
-                        CustomWidgets.customTextFeild(
-                          context: context,
-                          hintfontSize: 14,
-                          name: 'First Name',
-                          fontwgt: FontWeight.w600,
-                          headingcolor: MyColors.appSteelGrey,
-                          hint: 'Enter your First Name',
-                          validate: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your Name';
-                            }
-                            // Simple email validation
-                          },
-                          hintColor: MyColors.appSteelGrey,
-                          controller: nameController,
-                          keyboardtype: TextInputType.text,
-                          icon: Image(
-                            image: AssetImage('assets/images/person.png'),
-                            height: 14,
-                            width: 18,
-                          ),
-                        ),
-                        CustomWidgets.customTextFeild(
-                          context: context,
-                          hintfontSize: 14,
-                          name: 'Last Name',
-                          fontwgt: FontWeight.w600,
-                          headingcolor: MyColors.appSteelGrey,
-                          hint: 'Enter your Name',
-                          validate: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your Last Name';
-                            }
-                            // Simple email validation
-                          },
-                          hintColor: MyColors.appSteelGrey,
-                          controller: lastnameController,
-                          keyboardtype: TextInputType.text,
-                          icon: Image(
-                            image: AssetImage('assets/images/person.png'),
-                            height: 14,
-                            width: 18,
-                          ),
-                        ),
-                      ],
+                    CustomWidgets.customTextFeild(
+                      context: context,
+                      hintfontSize: 14,
+                      name: 'First Name',
+                      fontwgt: FontWeight.w600,
+                      headingcolor: MyColors.appSteelGrey,
+                      hint: 'Enter your First Name',
+                      validate: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Name';
+                        }
+                        // Simple email validation
+                      },
+                      hintColor: MyColors.appSteelGrey,
+                      controller: nameController,
+                      onTap: () {},
+                      keyboardtype: TextInputType.text,
+                      icon: Image(
+                        image: AssetImage('assets/images/person.png'),
+                        height: 14,
+                        width: 18,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    CustomWidgets.customTextFeild(
+                      context: context,
+                      hintfontSize: 14,
+                      name: 'Last Name',
+                      fontwgt: FontWeight.w600,
+                      headingcolor: MyColors.appSteelGrey,
+                      hint: 'Enter your Name',
+                      validate: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Last Name';
+                        }
+                        // Simple email validation
+                      },
+                      hintColor: MyColors.appSteelGrey,
+                      controller: lastnameController,
+                      keyboardtype: TextInputType.text,
+                      icon: Image(
+                        image: AssetImage('assets/images/person.png'),
+                        height: 14,
+                        width: 18,
+                      ),
                     ),
                     SizedBox(height: 20),
 
@@ -282,7 +266,7 @@ class _SignupPageState extends State<SignupPage>
                           child: CustomWidgets.customDropdownField(
                             context: context,
                             items: ['Male', 'Female'],
-                            selectedItem: 'Male',
+                            selectedItem: selectedGender,
                             label: 'Gender',
                             height: 60,
                             color: MyColors.appSteelGrey,

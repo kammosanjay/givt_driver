@@ -50,110 +50,114 @@ class _CouponsHistoryState extends State<CouponsHistory> {
     print(selectedvalue);
     return Scaffold(
       // backgroundColor: Color(0xFFe7f3ff),
-      body: Center(
-        child: Column(
-          spacing: 5,
-          children: [
-            Text(appLoc.wallet_page),
+      body: Container()
+      // Center(
+      //   child: Column(
+      //     spacing: 5,
+      //     children: [
+      //       Text(appLoc.wallet_page),
 
-            CustomWidgets.customTextFeild(context: context, name: 'Enter Name'),
-            CustomWidgets.customTextFeild(context: context, name: 'Contact'),
-            CustomWidgets.customTextFeild(context: context, name: 'Address'),
-            CustomWidgets.customDropdownField(
-              context: context,
-              items: const ['Male', 'Female'],
-              selectedItem: selectedvalue, // from provider
-              hint: 'Gender',
-              onChanged: (value) {
-                selectedvalue = value;
-              },
-            ),
+      //       CustomWidgets.customTextFeild(context: context, name: 'Enter Name'),
+      //       CustomWidgets.customTextFeild(context: context, name: 'Contact'),
+      //       CustomWidgets.customTextFeild(context: context, name: 'Address'),
+      //       CustomWidgets.customDropdownField(
+      //         context: context,
+      //         items: const ['Male', 'Female'],
+      //         selectedItem: selectedvalue, // from provider
+      //         hint: 'Gender',
+      //         onChanged: (value) {
+      //           selectedvalue = value;
+      //         },
+      //       ),
 
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 0.9,
-                ),
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    splashColor: Colors.white,
-                    onTap: () async {
-                      showBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: MyColors.primaryColor,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                topRight: Radius.circular(15),
-                              ),
-                            ),
-                            height: 200,
-                            child: Column(
-                              children: [
-                                Row(
-                                  spacing: 10,
-                                  children: [
-                                    Expanded(
-                                      child: CustomWidgets.customButton(
-                                        context: context,
-                                        buttonName: 'cancel',
-                                        height: 40,
-                                        fontSize: 20,
-                                        fontColor: Colors.white,
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: CustomWidgets.customButton(
-                                        context: context,
+      //       Expanded(
+      //         child: GridView.builder(
+      //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //             crossAxisCount: 3,
+      //             childAspectRatio: 0.9,
+      //           ),
+      //           itemCount: list.length,
+      //           itemBuilder: (context, index) {
+      //             return InkWell(
+      //               splashColor: Colors.white,
+      //               onTap: () async {
+      //                 showBottomSheet(
+      //                   context: context,
+      //                   builder: (context) {
+      //                     return Container(
+      //                       decoration: BoxDecoration(
+      //                         color: MyColors.primaryColor,
+      //                         borderRadius: BorderRadius.only(
+      //                           topLeft: Radius.circular(15),
+      //                           topRight: Radius.circular(15),
+      //                         ),
+      //                       ),
+      //                       height: 200,
+      //                       child: Column(
+      //                         children: [
+      //                           Row(
+      //                             spacing: 10,
+      //                             children: [
+      //                               Expanded(
+      //                                 child: CustomWidgets.customButton(
+      //                                   context: context,
+      //                                   buttonName: 'cancel',
+      //                                   height: 40,
+      //                                   fontSize: 20,
+      //                                   fontColor: Colors.white,
+      //                                   onPressed: () {
+      //                                     Navigator.pop(context);
+      //                                   },
+      //                                 ),
+      //                               ),
+      //                               Expanded(
+      //                                 child: CustomWidgets.customButton(
+      //                                   context: context,
 
-                                        buttonName: 'submit',
-                                        fontColor: Colors.white,
-                                        fontSize: 20,
-                                        height: 40,
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.all(4),
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.amber,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            list[index]['NAME'],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            list[index]['CONTACT'].toString(),
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      //                                   buttonName: 'submit',
+      //                                   fontColor: Colors.white,
+      //                                   fontSize: 20,
+      //                                   height: 40,
+      //                                   onPressed: () {},
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     );
+      //                   },
+      //                 );
+      //               },
+      //               child: Container(
+      //                 margin: const EdgeInsets.all(4),
+      //                 padding: const EdgeInsets.all(8),
+      //                 color: Colors.amber,
+      //                 child: Column(
+      //                   mainAxisAlignment: MainAxisAlignment.center,
+      //                   children: [
+      //                     Text(
+      //                       list[index]['NAME'],
+      //                       style: const TextStyle(fontWeight: FontWeight.bold),
+      //                     ),
+      //                     const SizedBox(height: 6),
+      //                     Text(
+      //                       list[index]['CONTACT'].toString(),
+      //                       style: const TextStyle(fontSize: 12),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             );
+      //           },
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
+   
+   
+   
     );
   }
 }
