@@ -52,21 +52,31 @@ class ActivityProvider with ChangeNotifier {
     try {
       final response = await ApiRepository.scanVoucher(vCode: vouCode);
 
-      if (response != null &&
-          response.statusCode == 201 &&
-          response.data['success'] == true) {
+      final ok =
+          response != null &&
+          (response.statusCode == 200 || response.statusCode == 201) &&
+          response.data['success'] == true;
+
+      if (!ok) {
+        debugPrint("Scan failed: ${response?.statusCode}  ${response?.data}");
+        return;
+      }
+
+      if (context.mounted) {
         FlutterToastr.show(
           response.data['message'] ?? "Voucher scanned successfully",
-          // ignore: use_build_context_synchronously
           context,
           duration: FlutterToastr.lengthLong,
           position: FlutterToastr.center,
         );
-        // 🔥 Switch to Activity tab
-
-        await context.read<ActivityProvider>().loadScannedVouchers();
-        context.read<BottomNavProvider>().changeIndex(1);
       }
+
+      await loadScannedVouchers();
+
+      if (!context.mounted) return;
+
+      Navigator.of(context).pop(); // close scanner screen if it was pushed
+      context.read<BottomNavProvider>().changeIndex(1);
     } catch (e) {
       debugPrint("Error fetching vouchers: $e");
     }
