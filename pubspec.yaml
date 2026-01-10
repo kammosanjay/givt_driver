@@ -74,7 +74,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   local_auth: 
   shimmer: 
-  mobile_scanner:  
+  mobile_scanner: ^7.1.4   
 
  
   

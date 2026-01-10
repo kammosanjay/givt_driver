@@ -310,7 +310,7 @@ class LoginProvider extends ChangeNotifier {
           backgroundColor: Colors.green,
         );
 
-        context.read<RouteProvider>().navigateTo('/home', context);
+        context.read<RouteProvider>().navigateReplace('/home', context);
         return;
       } else {
         debugPrint('testing2');

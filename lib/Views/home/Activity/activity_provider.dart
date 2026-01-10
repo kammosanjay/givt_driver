@@ -50,21 +50,65 @@ class ActivityProvider with ChangeNotifier {
   ///
   Future<void> scannedVoucher(String? vouCode, BuildContext context) async {
     try {
-      final response = await ApiRepository.scanVoucher(vCode: vouCode);
+      if (vouCode == null || vouCode.trim().isEmpty) {
+        if (!context.mounted) return;
+        FlutterToastr.show(
+          "Invalid QR code",
+          context,
+          duration: FlutterToastr.lengthLong,
+          position: FlutterToastr.center,
+        );
+        return;
+      }
 
+      final response = await ApiRepository.scanVoucher(vCode: vouCode.trim());
+
+      final status = response?.statusCode;
+      final data = response?.data;
+
+      // ----- ALREADY SCANNED handling (adjust to your backend) -----
+      final serverMsg = (data is Map)
+          ? (data['message']?.toString() ?? "")
+          : "";
+      final looksAlreadyScanned =
+          status == 409 ||
+          serverMsg.toLowerCase().contains("already") ||
+          serverMsg.toLowerCase().contains("scanned");
+
+      if (looksAlreadyScanned) {
+        if (!context.mounted) return;
+        
+        FlutterToastr.show(
+          serverMsg.isNotEmpty ? serverMsg : "This voucher is already scanned.",
+          context,
+          duration: FlutterToastr.lengthLong,
+          position: FlutterToastr.center,
+        );
+        return; // keep scanner open OR close it—your choice
+      }
+
+      // ----- SUCCESS handling -----
       final ok =
           response != null &&
-          (response.statusCode == 200 || response.statusCode == 201) &&
-          response.data['success'] == true;
+          (status == 200 || status == 201) &&
+          (data is Map && data['success'] == true);
 
       if (!ok) {
-        debugPrint("Scan failed: ${response?.statusCode}  ${response?.data}");
+        debugPrint("Scan failed: $status  $data");
+        if (!context.mounted) return;
+
+        FlutterToastr.show(
+          serverMsg.isNotEmpty ? serverMsg : "Scan failed. Please try again.",
+          context,
+          duration: FlutterToastr.lengthLong,
+          position: FlutterToastr.center,
+        );
         return;
       }
 
       if (context.mounted) {
         FlutterToastr.show(
-          response.data['message'] ?? "Voucher scanned successfully",
+          serverMsg.isNotEmpty ? serverMsg : "Voucher scanned successfully",
           context,
           duration: FlutterToastr.lengthLong,
           position: FlutterToastr.center,
@@ -74,11 +118,18 @@ class ActivityProvider with ChangeNotifier {
       await loadScannedVouchers();
 
       if (!context.mounted) return;
-
-      Navigator.of(context).pop(); // close scanner screen if it was pushed
+      // Navigator.of(context).pop(); // close scanner screen
       context.read<BottomNavProvider>().changeIndex(1);
     } catch (e) {
-      debugPrint("Error fetching vouchers: $e");
+      debugPrint("Error scanning voucher: $e");
+      if (!context.mounted) return;
+
+      FlutterToastr.show(
+        "Something went wrong. Please try again.",
+        context,
+        duration: FlutterToastr.lengthLong,
+        position: FlutterToastr.center,
+      );
     }
   }
 }
