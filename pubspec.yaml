@@ -58,7 +58,6 @@ dependencies:
   geocoding: 
   google_maps_flutter: 
   flutter_toastr: ^1.0.3
-   
   lottie: 
   file_picker: 
   image_picker: 
@@ -75,15 +74,6 @@ dependencies:
   local_auth: 
   shimmer: 
   mobile_scanner: ^7.1.4   
-
- 
-  
-  
-  
-  
- 
-
-
 
 dev_dependencies:
   flutter_test:

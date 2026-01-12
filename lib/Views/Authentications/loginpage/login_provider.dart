@@ -6,7 +6,6 @@ import 'package:flutter_toastr/flutter_toastr.dart';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:givt_driver_app/MyPageRoute/route_provider.dart';
-import 'package:givt_driver_app/Views/Authentications/OTP/pin_generate_screen.dart';
 
 import 'package:givt_driver_app/Views/Authentications/loginpage/login_response_modal.dart';
 
@@ -15,11 +14,8 @@ import 'package:givt_driver_app/Views/Authentications/signUpPage/signupModal.dar
 import 'package:givt_driver_app/Utils/api_repository.dart';
 
 import 'package:dio/dio.dart';
-import 'package:givt_driver_app/Utils/token.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:path/path.dart';
+
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginProvider extends ChangeNotifier {
   final box = GetStorage();

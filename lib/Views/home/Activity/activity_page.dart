@@ -30,6 +30,44 @@ class _ActivityPageState extends State<ActivityPage> {
     });
   }
 
+  Widget _buildInfoBox({
+    required IconData icon,
+    required String label,
+    required String value,
+    required Color color,
+  }) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, size: 18, color: color),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'sans-serif',
+            fontSize: 9,
+            color: MyColors.appSteelGrey,
+          ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontFamily: 'sans-serif',
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: MyColors.bodyTextColor,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget voucherContainer(
@@ -43,111 +81,165 @@ class _ActivityPageState extends State<ActivityPage> {
       double itemWidth = MediaQuery.of(context).size.width;
 
       final voucher = vouchers!.voucher;
+
       return Container(
-        width: itemWidth * 0.457,
-        height: itemHeight * 0.16,
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey, width: 1),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: MyColors.secondaryColor.withOpacity(0.15),
+              blurRadius: 15,
+              offset: const Offset(0, 6),
+            ),
+          ],
         ),
         child: Stack(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          voucher?.voucherTitle ?? "-",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontFamily: 'sans-serif',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800,
-                            color: isDarkEnabled
-                                ? Colors.black
-                                : MyColors.bodyTextColor,
-                          ),
-                        ),
+            // Background Decorative Circle
+            Positioned(
+              right: -20,
+              top: -20,
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: MyColors.appaqua.withOpacity(0.05),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 10,
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: MyColors.appaqua.withOpacity(0.08),
+                ),
+              ),
+            ),
 
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: "Vocher Code : ",
-                                style: TextStyle(
-                                  fontFamily: 'sans-serif',
-                                  color: MyColors.appSteelGrey,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              TextSpan(
-                                text: voucher!.voucherCode?.toString() ?? "-",
-                                style: const TextStyle(
-                                  fontFamily: 'sans-serif',
-                                  fontSize: 10,
-                                  color: MyColors.bodyTextColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+            // Main Content
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header Row
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Discount Badge
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              MyColors.appaqua,
+                              MyColors.appaqua.withOpacity(0.7),
                             ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: MyColors.appaqua.withOpacity(0.4),
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
                         ),
-
-                        Row(
+                        child: Column(
                           children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  const TextSpan(
-                                    text: "Valid from : ",
-                                    style: TextStyle(
-                                      color: MyColors.appSteelGrey,
-                                      fontSize: 10,
-                                      fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: voucher.validFrom?.toString() ?? "-",
-                                    style: const TextStyle(
-                                      color: MyColors.bodyTextColor,
-                                      fontSize: 10,
-                                      fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
+                            Text(
+                              "${voucher!.discountAmount ?? 0}${voucher.discountType ?? '%'}",
+                              style: const TextStyle(
+                                fontFamily: 'sans-serif',
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                                height: 1,
                               ),
                             ),
-                            SizedBox(width: 5),
-                            RichText(
-                              text: TextSpan(
+                            const SizedBox(height: 2),
+                            const Text(
+                              "OFF",
+                              style: TextStyle(
+                                fontFamily: 'sans-serif',
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white70,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(width: 14),
+
+                      // Title and Code
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              voucher.voucherTitle ?? "-",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontFamily: 'sans-serif',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: isDarkEnabled
+                                    ? Colors.black
+                                    : MyColors.bodyTextColor,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            // Code with dashed border
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade50,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.grey.shade300),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const TextSpan(
-                                    text: "Valid Upto : ",
-                                    style: TextStyle(
-                                      color: MyColors.appSteelGrey,
-                                      fontSize: 10,
-                                      fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.normal,
+                                  Expanded(
+                                    flex: 9,
+                                    child: Text(
+                                      voucher.voucherCode?.toString() ?? "-",
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontFamily: 'sans-serif',
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        color: MyColors.bodyTextColor,
+                                        letterSpacing: 1,
+                                      ),
                                     ),
                                   ),
-                                  TextSpan(
-                                    text: voucher.validUpto?.toString() ?? "-",
-                                    style: const TextStyle(
-                                      color: MyColors.bodyTextColor,
-                                      fontSize: 10,
-                                      fontFamily: 'sans-serif',
-                                      fontWeight: FontWeight.bold,
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Icon(
+                                      Icons.copy_rounded,
+                                      size: 16,
+                                      color: MyColors.appaqua,
                                     ),
                                   ),
                                 ],
@@ -155,124 +247,83 @@ class _ActivityPageState extends State<ActivityPage> {
                             ),
                           ],
                         ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: "Min Pur : ",
-                                style: TextStyle(
-                                  color: MyColors.appSteelGrey,
-                                  fontSize: 10,
-                                  fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              TextSpan(
-                                text: voucher.minPurchase?.toString() ?? "-",
-                                style: const TextStyle(
-                                  color: MyColors.bodyTextColor,
-                                  fontSize: 10,
-                                  fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                      ),
+
+                      // Logo
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: MyColors.appaqua.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Image.asset(
+                            'assets/images/couponlogo.png',
+                            height: 28,
+                            width: 28,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: "Max Discount : ",
-                                style: TextStyle(
-                                  color: MyColors.appSteelGrey,
-                                  fontSize: 10,
-                                  fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                              TextSpan(
-                                text: voucher.maxDiscount?.toString() ?? "-",
-                                style: const TextStyle(
-                                  color: MyColors.bodyTextColor,
-                                  fontSize: 10,
-                                  fontFamily: 'sans-serif',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  // Dashed Divider
+                  Row(
+                    children: List.generate(
+                      40,
+                      (index) => Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 2),
+                          height: 1,
+                          color: index.isEven
+                              ? Colors.grey.shade300
+                              : Colors.transparent,
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 6.0),
-                  child: Image.asset(
-                    'assets/images/couponlogo.png',
-                    height: 36,
-                    width: 36,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
-            ),
+                  const SizedBox(height: 12),
 
-            // Bottom-left T&C icon
-            Positioned(
-              left: 0,
-              bottom: 0,
-              child: Icon(
-                Icons.article,
-                size: 28,
-                color: Colors.black,
-              ), // placeholder for T&C
-            ),
-
-            // Bottom-right: 50% OFF
-            Positioned(
-              right: 5,
-              bottom: 5,
-              child: CustomPaint(
-                size: Size(
-                  itemWidth * 0.228,
-                  itemHeight * 0.06,
-                ), // width, height for the triangle area
-                painter: RightTrianglePainter(),
-              ),
-            ),
-            Positioned(
-              right: 10,
-              bottom: 12,
-              child: CustomPaint(
-                size: Size(80, 50), // width, height for the triangle area
-                child: Text(
-                  "${voucher!.discountAmount.toString() + voucher.discountType.toString()}",
-                  style: TextStyle(
-                    fontFamily: 'sans-serif',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                  // Info Row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Valid From
+                      _buildInfoBox(
+                        icon: Icons.event_available_outlined,
+                        label: "Valid From",
+                        value: voucher.validFrom?.toString() ?? "-",
+                        color: Colors.green,
+                      ),
+                      // Valid Upto
+                      _buildInfoBox(
+                        icon: Icons.event_busy_outlined,
+                        label: "Valid Upto",
+                        value: voucher.validUpto?.toString() ?? "-",
+                        color: Colors.orange,
+                      ),
+                      // Min Purchase
+                      _buildInfoBox(
+                        icon: Icons.shopping_bag_outlined,
+                        label: "Min Order",
+                        value: "₹${voucher.minPurchase ?? '-'}",
+                        color: Colors.blue,
+                      ),
+                      // Max Discount
+                      _buildInfoBox(
+                        icon: Icons.savings_outlined,
+                        label: "Max Save",
+                        value: "₹${voucher.maxDiscount ?? '-'}",
+                        color: MyColors.appaqua,
+                      ),
+                    ],
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: 10,
-              bottom: 3,
-              child: CustomPaint(
-                size: Size(80, 50), // width, height for the triangle area
-                child: Text(
-                  "OFF",
-                  style: TextStyle(
-                    fontFamily: 'sans-serif',
-                    fontSize: 10,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
-                  ),
-                ),
+                ],
               ),
             ),
           ],
@@ -283,10 +334,11 @@ class _ActivityPageState extends State<ActivityPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: MyColors.appaqua,
         onPressed: () {
           context.read<ActivityProvider>().loadScannedVouchers();
         },
-        child: const Icon(Icons.refresh),
+        child: Icon(Icons.refresh, color: MyColors.backgroundColor),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
